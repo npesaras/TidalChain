@@ -27,6 +27,9 @@ import {
   Calendar,
   Fish,
   Clock,
+  Truck,
+  MapPin,
+  Package,
 } from "lucide-react"
 import { DashboardHeader } from "@/components/dashboard-header"
 
@@ -61,6 +64,8 @@ import {
   formatCurrency,
   type SpeciesRevenue
 } from "@/lib/data/species"
+
+import { deliveries } from "@/lib/data/deliveries"
 
 export default function ProducerDashboard() {
   const [timeRange, setTimeRange] = useState("7d")
@@ -288,7 +293,7 @@ export default function ProducerDashboard() {
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="harvests">My Harvests</TabsTrigger>
+            <TabsTrigger value="delivery">Delivery Status</TabsTrigger>
             <TabsTrigger value="revenue">Revenue</TabsTrigger>
             <TabsTrigger value="performance">Token Performance</TabsTrigger>
           </TabsList>
@@ -488,34 +493,95 @@ export default function ProducerDashboard() {
             </Card>
 
           {/* Active Tokens Overview */}
-          </TabsContent>
-          <TabsContent value="harvests" className="space-y-6">
+          </TabsContent>          
+          <TabsContent value="delivery" className="space-y-6">
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle>Active Harvest Tokens</CardTitle>
-                    <CardDescription>Your current tokenized fish harvests</CardDescription>
+                    <CardTitle className="flex items-center">
+                      <Truck className="h-5 w-5 mr-2" />
+                      Delivery Status & History
+                    </CardTitle>
+                    <CardDescription>Track your fish deliveries and their current status</CardDescription>
                   </div>
-                  <ToggleGroup
-                    type="single"
-                    value={viewMode}
-                    onValueChange={(value) => value && setViewMode(value as "grid" | "list")}
-                  >
-                    <ToggleGroupItem value="grid" aria-label="Grid view">
-                      <Grid3X3 className="h-4 w-4" />
-                    </ToggleGroupItem>
-                    <ToggleGroupItem value="list" aria-label="List view">
-                      <List className="h-4 w-4" />
-                    </ToggleGroupItem>
-                  </ToggleGroup>
                 </div>
               </CardHeader>
               <CardContent>
-                {viewMode === "grid" ? renderTokenGridView() : renderTokenListView()}
+                <div className="space-y-4">
+                  {deliveries.map((delivery) => {
+                    const getStatusInfo = (step: number) => {
+                      switch (step) {
+                        case 1:
+                          return { status: "Harvesting", icon: Fish, color: "text-blue-600", bg: "bg-blue-50", badge: "bg-blue-100 text-blue-800" }
+                        case 2:
+                          return { status: "In Transit", icon: Truck, color: "text-orange-600", bg: "bg-orange-50", badge: "bg-orange-100 text-orange-800" }
+                        case 3:
+                          return { status: "Arrived", icon: MapPin, color: "text-green-600", bg: "bg-green-200", badge: "bg-green-600 text-green-100" }
+                        case 4:
+                          return { status: "Delivered", icon: CheckCircle, color: "text-yellow-700", bg: "bg-yellow-100", badge: "bg-yellow-400 text-yellow-900" }
+                        default:
+                          return { status: "Processing", icon: Package, color: "text-gray-600", bg: "bg-gray-50", badge: "bg-gray-100 text-gray-800" }
+                      }
+                    }
+                    
+                    const statusInfo = getStatusInfo(delivery.currentStep)
+                    const StatusIcon = statusInfo.icon
+                    
+                    return (
+                      <div key={delivery.id} className={`p-4 rounded-lg border ${statusInfo.bg} hover:shadow-sm transition-shadow`}>
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center space-x-3">
+                            <StatusIcon className={`h-5 w-5 ${statusInfo.color}`} />
+                            <div>
+                              <p className="font-semibold text-lg">{delivery.tokenId}</p>
+                              <p className="text-sm text-gray-600">{delivery.id}</p>
+                            </div>
+                          </div>
+                          <Badge className={statusInfo.badge}>
+                            {statusInfo.status}
+                          </Badge>
+                        </div>
+                        
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                          <div>
+                            <p className="text-gray-600">Fish Type & Quantity</p>
+                            <p className="font-medium">{delivery.fishType} - {delivery.quantity}{delivery.unit}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-600">Destination</p>
+                            <p className="font-medium">{delivery.destination}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-600">Courier</p>
+                            <p className="font-medium">{delivery.courierName}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-600">Estimated Delivery</p>
+                            <p className="font-medium">{new Date(delivery.estimatedDelivery).toLocaleDateString()}</p>
+                          </div>
+                        </div>
+
+                        {delivery.currentStep < 4 && (
+                          <div className="mt-3 pt-3 border-t border-gray-200">
+                            <p className="text-xs text-gray-500">Current Location: {delivery.gpsLocation.address}</p>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                  
+                  {deliveries.length === 0 && (
+                    <div className="text-center py-12">
+                      <Truck className="h-16 w-16 mx-auto text-gray-400 mb-4" />
+                      <p className="text-gray-600 mb-4">No deliveries yet</p>
+                      <p className="text-sm text-gray-500">Deliveries will appear here once you start harvesting tokens</p>
+                    </div>
+                  )}
+                </div>
               </CardContent>
             </Card>
-          </TabsContent>          
+          </TabsContent>
           {/* Revenue Overview */}
           <TabsContent value="revenue" className="space-y-6">
             {/* Revenue Summary Cards */}
