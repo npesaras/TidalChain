@@ -308,24 +308,39 @@ export default function ProducerDashboard() {
                 <CardDescription>
                   Current stock capacity across all ponds
                 </CardDescription>
-              </CardHeader>
-              <CardContent>
+              </CardHeader>              <CardContent>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-2xl font-bold text-gray-900">{utilizationPercentage}%</p>
+                      <p className={`text-2xl font-bold ${
+                        utilizationPercentage <= 60 ? 'text-green-600' :
+                        utilizationPercentage <= 90 ? 'text-orange-600' :
+                        'text-red-600'
+                      }`}>
+                        {utilizationPercentage}%
+                      </p>
                       <p className="text-sm text-gray-600">
                         {currentStock} of {totalCapacity} capacity used
                       </p>
-                    </div>
-                    <div className="text-right">
+                    </div>                    <div className="text-right">
                       <p className="text-sm text-gray-600">Available Capacity</p>
-                      <p className="text-lg font-semibold text-blue-600">
+                      <p className={`text-lg font-semibold ${
+                        utilizationPercentage <= 60 ? 'text-green-600' :
+                        utilizationPercentage <= 90 ? 'text-orange-600' :
+                        'text-red-600'
+                      }`}>
                         {(totalCapacityNum - currentStockNum).toLocaleString()} kg
                       </p>
                     </div>
                   </div>
-                  <Progress value={utilizationPercentage} className="h-3" />
+                  <Progress 
+                    value={utilizationPercentage} 
+                    className={`h-3 ${
+                      utilizationPercentage <= 60 ? '[&>div]:bg-green-500' :
+                      utilizationPercentage <= 90 ? '[&>div]:bg-orange-500' :
+                      '[&>div]:bg-red-500'
+                    }`} 
+                  />
                 </div>
               </CardContent>
             </Card>

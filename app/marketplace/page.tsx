@@ -65,7 +65,7 @@ export default function MarketplacePage() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Marketplace Analytics</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Marketplace</h1>
             <p className="text-gray-600">Monitor demand and pricing for your fish species</p>
           </div>
         </div>
