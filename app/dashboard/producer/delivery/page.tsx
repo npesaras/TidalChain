@@ -245,53 +245,79 @@ export default function DeliveryPage() {
                   >
                     Completed
                   </TabsTrigger>
-                </TabsList>
-
+                </TabsList>                
                 { /* Active Deliveries */}
                 <TabsContent value="active" className="space-y-4 mt-0">
-                  {getActiveDeliveries().map((delivery) => (
-                    <div
-                      key={delivery.id}
-                      className={`p-4 rounded-xl border cursor-pointer transition-all duration-200 hover:shadow-md ${
-                        selectedDelivery.id === delivery.id
-                          ? "border-blue-500 bg-gradient-to-br from-blue-50 to-blue-100/50 shadow-md ring-1 ring-blue-200"
-                          : "border-gray-200 hover:bg-gray-50 hover:border-gray-300"
-                      }`}
-                      onClick={() => setSelectedDelivery(delivery)}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="font-semibold text-sm text-gray-900">
-                          {delivery.id}
-                        </span>
-                        <Badge
-                          variant="outline"
-                          className="bg-blue-50 text-blue-700 border-blue-200"
-                        >
-                          {delivery.fishType}
-                        </Badge>
-                      </div>
-                      <div className="text-sm text-muted-foreground mb-3 space-y-1">
-                        <div className="font-medium">
-                          {delivery.quantity} {delivery.unit}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {delivery.destination}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Progress
-                          value={(delivery.currentStep / 4) * 100}
-                          className="flex-1 h-2"
-                        />
-                        <span className="text-sm font-medium text-muted-foreground">
-                          {delivery.currentStep}/4
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </TabsContent>
+                  {getActiveDeliveries().map((delivery) => {
+                    const getStatusInfo = (step: number) => {
+                      switch (step) {
+                        case 1:
+                          return { status: "Harvesting", icon: Fish, color: "text-blue-600", bg: "bg-blue-50", badge: "bg-blue-100 text-blue-800", border: "border-blue-200", ring: "ring-blue-200" }
+                        case 2:
+                          return { status: "In Transit", icon: Truck, color: "text-orange-600", bg: "bg-orange-50", badge: "bg-orange-100 text-orange-800", border: "border-orange-200", ring: "ring-orange-200" }
+                        case 3:
+                          return { status: "Arrived", icon: MapPin, color: "text-green-600", bg: "bg-green-50", badge: "bg-green-100 text-green-800", border: "border-green-200", ring: "ring-green-200" }
+                        case 4:
+                          return { status: "Delivered", icon: CheckCircle, color: "text-purple-600", bg: "bg-purple-50", badge: "bg-purple-100 text-purple-800", border: "border-purple-200", ring: "ring-purple-200" }
+                        default:
+                          return { status: "Processing", icon: Package, color: "text-gray-600", bg: "bg-gray-50", badge: "bg-gray-100 text-gray-800", border: "border-gray-200", ring: "ring-gray-200" }
+                      }
+                    }
 
+                    const statusInfo = getStatusInfo(delivery.currentStep)
+                    const StatusIcon = statusInfo.icon
+
+                    return (
+                      <div
+                        key={delivery.id}
+                        className={`p-4 rounded-xl border cursor-pointer transition-all duration-200 hover:shadow-md ${
+                          selectedDelivery.id === delivery.id
+                            ? `${statusInfo.border} ${statusInfo.bg} shadow-md ring-1 ${statusInfo.ring}`
+                            : `border-gray-200 hover:bg-gray-50 hover:border-gray-300`
+                        }`}
+                        onClick={() => setSelectedDelivery(delivery)}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            <StatusIcon className={`h-4 w-4 ${statusInfo.color}`} />
+                            <span className="font-semibold text-sm text-gray-900">
+                              {delivery.id}
+                            </span>
+                          </div>
+                          <Badge
+                            variant="outline"
+                            className={statusInfo.badge}
+                          >
+                            {statusInfo.status}
+                          </Badge>
+                        </div>
+                        <div className="text-sm text-muted-foreground mb-3 space-y-1">
+                          <div className="font-medium">
+                            {delivery.fishType} • {delivery.quantity} {delivery.unit}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MapPin className="h-3 w-3" />
+                            {delivery.destination}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Progress
+                            value={(delivery.currentStep / 4) * 100}
+                            className={`flex-1 h-2 ${
+                              delivery.currentStep === 1 ? '[&>div]:bg-blue-500' :
+                              delivery.currentStep === 2 ? '[&>div]:bg-orange-500' :
+                              delivery.currentStep === 3 ? '[&>div]:bg-green-500' :
+                              '[&>div]:bg-purple-500'
+                            }`}
+                          />
+                          <span className={`text-sm font-medium ${statusInfo.color}`}>
+                            {delivery.currentStep}/4
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </TabsContent>                
                 {/* Completed Deliveries */}
                 <TabsContent value="completed" className="space-y-4 mt-0">
                   {getCompletedDeliveries().map((delivery) => (
@@ -299,18 +325,21 @@ export default function DeliveryPage() {
                       key={delivery.id}
                       className={`p-4 rounded-xl border cursor-pointer transition-all duration-200 hover:shadow-md ${
                         selectedDelivery.id === delivery.id
-                          ? "border-green-500 bg-gradient-to-br from-green-50 to-green-100/50 shadow-md ring-1 ring-green-200"
+                          ? "border-green-500 bg-green-50 shadow-md ring-1 ring-green-200"
                           : "border-gray-200 hover:bg-gray-50 hover:border-gray-300"
                       }`}
                       onClick={() => setSelectedDelivery(delivery)}
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="font-semibold text-sm text-gray-900">
-                          {delivery.id}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                          <span className="font-semibold text-sm text-gray-900">
+                            {delivery.id}
+                          </span>
+                        </div>
                         <Badge
                           variant="outline"
-                          className="bg-green-50 text-green-700 border-green-200"
+                          className="bg-green-100 text-green-800 border-green-200"
                         >
                           {delivery.fishType}
                         </Badge>
