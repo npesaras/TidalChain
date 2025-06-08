@@ -1,0 +1,14 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/auth/page": "app/auth/page.js",
+  "/createNewToken/page": "app/createNewToken/page.js",
+  "/dashboard/producer/delivery/page": "app/dashboard/producer/delivery/page.js",
+  "/dashboard/producer/page": "app/dashboard/producer/page.js",
+  "/dashboard/producer/tokens/page": "app/dashboard/producer/tokens/page.js",
+  "/dashboard/producer/revenue/page": "app/dashboard/producer/revenue/page.js",
+  "/dashboard/producer/pond/page": "app/dashboard/producer/pond/page.js",
+  "/governance/page": "app/governance/page.js",
+  "/marketplace/page": "app/marketplace/page.js",
+  "/page": "app/page.js",
+  "/viewToken/page": "app/viewToken/page.js"
+}
