@@ -43,6 +43,9 @@ TidalChain revolutionizes sustainable aquaculture financing by:
 4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+5. **MUST READ:**
+   If it is deployed, and there are some errors with page loading, just reload the website.
+
 
 ## 🌐 Available Scripts
 
