@@ -16,6 +16,14 @@ export interface DeliveryStep {
   location?: string
 }
 
+export interface StepDetails {
+  title: string
+  description: string
+  color: string
+  bgColor: string
+  borderColor: string
+}
+
 export interface Delivery {
   id: string
   tokenId: string
@@ -335,6 +343,40 @@ export const getDeliveryStats = () => {
     completed,
     avgQuality: Math.round(avgQuality)
   }
+}
+
+export const getStepDetails = (stepId: number): StepDetails => {
+  const details = {
+    1: {
+      title: "Basket",
+      description: "Fish being harvested from pond and collected in baskets",
+      color: "blue",
+      bgColor: "bg-blue-50",
+      borderColor: "border-blue-200",
+    },
+    2: {
+      title: "Delivery",
+      description: "Fish packaged with ice and loaded for delivery",
+      color: "orange",
+      bgColor: "bg-orange-50",
+      borderColor: "border-orange-200",
+    },
+    3: {
+      title: "Arrived",
+      description: "Package arrived at destination, awaiting confirmation",
+      color: "blue",
+      bgColor: "bg-blue-50",
+      borderColor: "border-blue-200",
+    },
+    4: {
+      title: "Payment",
+      description: "Fish successfully delivered and payment processed",
+      color: "green",
+      bgColor: "bg-green-50",
+      borderColor: "border-green-200",
+    },
+  };
+  return details[stepId as keyof typeof details];
 }
 
 export const formatDeliveryTime = (dateString: string) => {

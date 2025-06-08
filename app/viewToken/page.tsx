@@ -235,7 +235,8 @@ export default function ViewTokenPage() {
               </TabsContent>
 
               <TabsContent value="iot" className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">                  <Card>
+                <div className="grid md:grid-cols-2 gap-4">                  
+                  <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         Temperature
@@ -259,7 +260,8 @@ export default function ViewTokenPage() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>                  <Card>
+                  </Card>                  
+                  <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         Oxygen Level
@@ -283,7 +285,8 @@ export default function ViewTokenPage() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>                  <Card>
+                  </Card>                  
+                  <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         Salinity
@@ -307,7 +310,8 @@ export default function ViewTokenPage() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>                  <Card>
+                  </Card>                  
+                  <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         pH Level
@@ -499,7 +503,8 @@ export default function ViewTokenPage() {
                   <Camera className="h-5 w-5" />
                   Photos
                 </CardTitle>
-              </CardHeader>              <CardContent>
+              </CardHeader>              
+              <CardContent>
                 <div className="space-y-3">
                   <div className="aspect-video rounded-lg overflow-hidden">
                     <img
