@@ -771,24 +771,6 @@ export default function ProducerDashboard() {
                     </div>
                   ))}
                 </div>
-                
-                {/* Payment Summary */}
-                <div className="mt-6 pt-4 border-t">
-                  <div className="grid md:grid-cols-3 gap-4 text-center">
-                    <div>
-                      <p className="text-sm text-gray-600">This Month</p>
-                      <p className="text-lg font-semibold text-green-600">₱98,420</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600">Last Month</p>
-                      <p className="text-lg font-semibold text-gray-900">₱85,230</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600">Growth</p>
-                      <p className="text-lg font-semibold text-blue-600">+15.5%</p>
-                    </div>
-                  </div>
-                </div>
               </CardContent>
             </Card>
           </TabsContent>
