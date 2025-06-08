@@ -128,19 +128,20 @@ export default function RevenuePage() {
   // Payment and transaction data
   const paymentTransactions = getTransactionsByType('payment').concat(getTransactionsByType('harvest'))
   const recentPayments = paymentTransactions.slice(0, 8)
-
   // Calculate payment stats
   const completedPayments = paymentTransactions.filter(t => t.status === 'completed')
   const pendingPayments = paymentTransactions.filter(t => t.status === 'pending')
   
   const totalEarnings = completedPayments.reduce((sum, payment) => {
+    if (!payment.amount) return sum
     const amount = parseFloat(payment.amount.replace(/[₱,]/g, ''))
-    return sum + amount
+    return sum + (isNaN(amount) ? 0 : amount)
   }, 0)
 
   const pendingAmount = pendingPayments.reduce((sum, payment) => {
+    if (!payment.amount) return sum
     const amount = parseFloat(payment.amount.replace(/[₱,]/g, ''))
-    return sum + amount
+    return sum + (isNaN(amount) ? 0 : amount)
   }, 0)
 
   return (
@@ -252,18 +253,19 @@ export default function RevenuePage() {
               </Select>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">              {/* Revenue & Profit Chart */}
+            <div className="grid md:grid-cols-2 gap-6">              
+            {/* Revenue & Profit Chart */}
               <Card className="md:col-span-2">
                 <CardHeader>
                   <CardTitle>Revenue & Profit Trends</CardTitle>
                   <CardDescription>Financial performance over time</CardDescription>
                 </CardHeader>
-                <CardContent className="p-6">
-                  <ChartContainer
+                <CardContent className="p-6">                      
+                    <ChartContainer
                     config={{
                       revenue: {
                         label: "Revenue",
-                        color: "hsl(var(--chart-1))",
+                        color: "hsl(142, 76%, 36%)", // Green color
                       },
                       profit: {
                         label: "Profit",
@@ -271,7 +273,7 @@ export default function RevenuePage() {
                       },
                       expenses: {
                         label: "Expenses",
-                        color: "hsl(var(--chart-3))",
+                        color: "hsl(0, 100%, 50%)", // Red color
                       },
                     }}
                     className="h-80 w-full"
