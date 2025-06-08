@@ -6,6 +6,8 @@ import { Fish, Waves, TrendingUp, Shield, Users, Leaf } from "lucide-react"
 import { canisterId as frontendCanisterId } from "@/components/declarations/tidal_chain_assets"
 
 
+// the homepage retrieves mock data from the motoko backend
+// but does not use the service actor.
 export default function HomePage() {
   
 

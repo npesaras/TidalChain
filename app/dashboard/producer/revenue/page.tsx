@@ -1,5 +1,7 @@
 "use client"
 
+
+// This page retrieves the transaction mock data from the motoko backend
 import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"

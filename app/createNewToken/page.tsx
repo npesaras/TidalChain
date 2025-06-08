@@ -1,5 +1,9 @@
 "use client"
 
+
+// This page is for producers to create new fish harvest tokens.
+// The mock data was implemented on the motoko, but in the future, 
+// the motoko backend will be used for data processing and storage/
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"

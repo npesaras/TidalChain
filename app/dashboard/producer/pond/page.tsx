@@ -1,5 +1,8 @@
 "use client"
 
+
+// This page is for producers to monitor and manage their fish ponds and tokens
+// In the future, this page will be connected to the motoko backend http_request
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"

@@ -1,5 +1,7 @@
 "use client"
 
+
+// this page is for the DAO governance, further development will be done on the motoko backend
 import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"

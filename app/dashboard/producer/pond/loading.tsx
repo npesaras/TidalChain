@@ -1,6 +1,8 @@
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
+
+// This component is used to display a loading state for the MyPond page
 export default function MyPondLoading() {
   return (
     <div className="min-h-screen bg-gray-50">

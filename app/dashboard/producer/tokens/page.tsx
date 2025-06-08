@@ -1,5 +1,7 @@
 "use client"
 
+
+// This page retrieves tokens from the motoko backend
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"

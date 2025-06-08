@@ -1,5 +1,10 @@
 "use client"
 
+// The authentication page only simulates the authentication process,
+// for the real authentication, we will use Internet Identity Auth Http_request
+// method from the motoko to ensure that the motoko canister utilized the Internet Identity
+// in terms of blockchain
+
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"

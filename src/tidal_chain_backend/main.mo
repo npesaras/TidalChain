@@ -1,4 +1,5 @@
-// Data Structures
+
+// The modules are imported from the lib folder, which contains the mock data
 import detailedTokens "lib/detailedTokens";
 
 import Market "lib/market";
@@ -17,6 +18,9 @@ actor {
   public stable var stablePrincipal: TrieMap<Text, Text> = TrieMap.empty<Text, Text>()
   */
 
+  // stable variables are not optimized for size, further development will utilize multiple
+  // canisters for storing data.
+  // this is only a simulation of the motoko backend. 
   stable var stableDetailedTokensData: [detailedTokens.DetailedToken] = [];
 
   stable var stableRestaurantsData: [Market.Restaurant] = [];
@@ -41,7 +45,9 @@ actor {
   system func postupgrade() {
     // pass
   };
-  
+
+
+  // this function populates all the mock data in the stable variables
   public shared func populateAll() : async () {
     let detailed_token_mock_data: [detailedTokens.DetailedToken] = detailedTokens.getMockData();
    
@@ -87,6 +93,8 @@ actor {
     return Principal.fromTetext()}
   */
 
+
+  // the functions below are getters for the mock data that wil be sent to the frontend
   public shared func getDetailedTokens(): async [detailedTokens.DetailedToken] {
     return stableDetailedTokensData;
   };

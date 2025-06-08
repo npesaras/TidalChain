@@ -1,5 +1,7 @@
 "use client";
 
+// This page has mock data, and was not implemented on the motoko
+
 import { useState, useEffect } from "react";
 import {
   Card,

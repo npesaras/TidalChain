@@ -2,6 +2,8 @@ import path from 'path';
 
 let localCanisters, prodCanisters, canisters;
 
+// this function initiates canister IDS based on the dfx.json file
+
 function initCanisterIds() {
     try {
         localCanisters = require(path.resolve('.dfx', 'local', 'canister_ids.json'));

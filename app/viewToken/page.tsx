@@ -1,5 +1,7 @@
 "use client"
 
+// this page does not retrieve mock data from the motoko backend
+// further implementation will be done 
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
