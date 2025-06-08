@@ -14,7 +14,6 @@ import {
   Fish,
   Calendar,
   TrendingUp,
-  BarChart3,
   Plus,
   Grid,
   List,
@@ -27,8 +26,6 @@ import {
   AlertTriangle,
 } from "lucide-react"
 import { DashboardHeader } from "@/components/dashboard-header"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { tokens as sharedTokens } from "@/lib/data/tokens"
 
 export default function MyTokensPage() {
@@ -53,45 +50,7 @@ export default function MyTokensPage() {
     riskLevel: index === 0 ? "Low" : index === 1 ? "Low" : "Medium",
     createdDate: index === 0 ? "2024-01-15" : index === 1 ? "2024-01-08" : "2024-02-01",
     lastUpdate: index === 0 ? "2 hours ago" : index === 1 ? "1 hour ago" : "3 hours ago",
-    image: token.image,
-  }))
-
-  // Mock data for performance charts
-  const performanceData = [
-    { month: "Jan", growth: 15, funding: 12000, investors: 3, value: 18000 },
-    { month: "Feb", growth: 28, funding: 24000, investors: 5, value: 22000 },
-    { month: "Mar", growth: 42, funding: 35000, investors: 8, value: 28000 },
-    { month: "Apr", growth: 58, funding: 48000, investors: 12, value: 35000 },
-    { month: "May", growth: 75, funding: 62000, investors: 15, value: 42000 },
-    { month: "Jun", growth: 85, funding: 75000, investors: 18, value: 48000 },
-  ]
-
-  const revenueData = [
-    { month: "Jan", revenue: 8500, profit: 2100, expenses: 6400 },
-    { month: "Feb", revenue: 12300, profit: 3200, expenses: 9100 },
-    { month: "Mar", revenue: 18700, profit: 5400, expenses: 13300 },
-    { month: "Apr", revenue: 24500, profit: 7800, expenses: 16700 },
-    { month: "May", revenue: 31200, profit: 10500, expenses: 20700 },
-    { month: "Jun", revenue: 38900, profit: 13200, expenses: 25700 },
-  ]
-
-  const riskData = [
-    { month: "Jan", lowRisk: 60, mediumRisk: 30, highRisk: 10 },
-    { month: "Feb", lowRisk: 65, mediumRisk: 25, highRisk: 10 },
-    { month: "Mar", lowRisk: 70, mediumRisk: 22, highRisk: 8 },
-    { month: "Apr", lowRisk: 68, mediumRisk: 25, highRisk: 7 },
-    { month: "May", lowRisk: 72, mediumRisk: 20, highRisk: 8 },
-    { month: "Jun", lowRisk: 75, mediumRisk: 18, highRisk: 7 },
-  ]
-
-  const tokenMetricsData = [
-    { month: "Jan", totalTokens: 2, activeTokens: 2, completedTokens: 0, avgReturn: 8.5 },
-    { month: "Feb", totalTokens: 3, activeTokens: 3, completedTokens: 0, avgReturn: 9.2 },
-    { month: "Mar", totalTokens: 4, activeTokens: 4, completedTokens: 0, avgReturn: 10.1 },
-    { month: "Apr", totalTokens: 5, activeTokens: 4, completedTokens: 1, avgReturn: 11.8 },
-    { month: "May", totalTokens: 6, activeTokens: 5, completedTokens: 1, avgReturn: 12.3 },
-    { month: "Jun", totalTokens: 6, activeTokens: 4, completedTokens: 2, avgReturn: 13.1 },
-  ]
+    image: token.image,  }))
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -212,7 +171,6 @@ export default function MyTokensPage() {
         <Tabs defaultValue="all-tokens" className="space-y-6">
           <TabsList>
             <TabsTrigger value="all-tokens">All Tokens</TabsTrigger>
-            <TabsTrigger value="performance">Performance</TabsTrigger>
             <TabsTrigger value="history">History</TabsTrigger>
           </TabsList>
           <TabsContent value="all-tokens" className="space-y-6">
@@ -434,265 +392,7 @@ export default function MyTokensPage() {
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="performance" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Token Status Distribution</CardTitle>
-                <CardDescription>Current status of all your tokens</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-4 gap-4">
-                  {["Funding", "Growing", "Ready Soon", "Harvested"].map((status) => {
-                    const count = tokens.filter((token) => token.status === status).length
-                    const percentage = Math.round((count / tokens.length) * 100)
-                    return (
-                      <div key={status} className="text-center p-4 border rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600">{count}</div>
-                        <div className="text-sm text-gray-600">{status}</div>
-                        <div className="text-xs text-gray-500">{percentage}%</div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Growth & Funding Progress</CardTitle>
-                  <CardDescription>Token growth and funding trends over time</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ChartContainer
-                    config={{
-                      growth: {
-                        label: "Growth Progress (%)",
-                        color: "hsl(var(--chart-1))",
-                      },
-                      funding: {
-                        label: "Funding ($)",
-                        color: "hsl(var(--chart-2))",
-                      },
-                    }}
-                    className="h-64"
-                  >
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={performanceData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis yAxisId="left" />
-                        <YAxis yAxisId="right" orientation="right" />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Legend />
-                        <Line
-                          yAxisId="left"
-                          type="monotone"
-                          dataKey="growth"
-                          stroke="var(--color-growth)"
-                          strokeWidth={2}
-                          name="Growth Progress (%)"
-                        />
-                        <Line
-                          yAxisId="right"
-                          type="monotone"
-                          dataKey="funding"
-                          stroke="var(--color-funding)"
-                          strokeWidth={2}
-                          name="Funding ($)"
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Revenue & Profitability</CardTitle>
-                  <CardDescription>Financial performance and profit margins</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ChartContainer
-                    config={{
-                      revenue: {
-                        label: "Revenue",
-                        color: "hsl(var(--chart-3))",
-                      },
-                      profit: {
-                        label: "Profit",
-                        color: "hsl(var(--chart-4))",
-                      },
-                      expenses: {
-                        label: "Expenses",
-                        color: "hsl(var(--chart-5))",
-                      },
-                    }}
-                    className="h-64"
-                  >
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={revenueData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Legend />
-                        <Line
-                          type="monotone"
-                          dataKey="revenue"
-                          stroke="var(--color-revenue)"
-                          strokeWidth={2}
-                          name="Revenue ($)"
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="profit"
-                          stroke="var(--color-profit)"
-                          strokeWidth={2}
-                          name="Profit ($)"
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="expenses"
-                          stroke="var(--color-expenses)"
-                          strokeWidth={2}
-                          name="Expenses ($)"
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
-                </CardContent>
-              </Card>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Risk Distribution Trends</CardTitle>
-                  <CardDescription>Portfolio risk levels over time</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ChartContainer
-                    config={{
-                      lowRisk: {
-                        label: "Low Risk",
-                        color: "hsl(142, 76%, 36%)",
-                      },
-                      mediumRisk: {
-                        label: "Medium Risk",
-                        color: "hsl(48, 96%, 53%)",
-                      },
-                      highRisk: {
-                        label: "High Risk",
-                        color: "hsl(0, 84%, 60%)",
-                      },
-                    }}
-                    className="h-64"
-                  >
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={riskData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Legend />
-                        <Line
-                          type="monotone"
-                          dataKey="lowRisk"
-                          stroke="var(--color-lowRisk)"
-                          strokeWidth={2}
-                          name="Low Risk (%)"
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="mediumRisk"
-                          stroke="var(--color-mediumRisk)"
-                          strokeWidth={2}
-                          name="Medium Risk (%)"
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="highRisk"
-                          stroke="var(--color-highRisk)"
-                          strokeWidth={2}
-                          name="High Risk (%)"
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Token Metrics & Returns</CardTitle>
-                  <CardDescription>Token count and average return performance</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ChartContainer
-                    config={{
-                      totalTokens: {
-                        label: "Total Tokens",
-                        color: "hsl(var(--chart-1))",
-                      },
-                      activeTokens: {
-                        label: "Active Tokens",
-                        color: "hsl(var(--chart-2))",
-                      },
-                      completedTokens: {
-                        label: "Completed Tokens",
-                        color: "hsl(var(--chart-3))",
-                      },
-                      avgReturn: {
-                        label: "Avg Return (%)",
-                        color: "hsl(var(--chart-4))",
-                      },
-                    }}
-                    className="h-64"
-                  >
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={tokenMetricsData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis yAxisId="left" />
-                        <YAxis yAxisId="right" orientation="right" />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Legend />
-                        <Line
-                          yAxisId="left"
-                          type="monotone"
-                          dataKey="totalTokens"
-                          stroke="var(--color-totalTokens)"
-                          strokeWidth={2}
-                          name="Total Tokens"
-                        />
-                        <Line
-                          yAxisId="left"
-                          type="monotone"
-                          dataKey="activeTokens"
-                          stroke="var(--color-activeTokens)"
-                          strokeWidth={2}
-                          name="Active Tokens"
-                        />
-                        <Line
-                          yAxisId="left"
-                          type="monotone"
-                          dataKey="completedTokens"
-                          stroke="var(--color-completedTokens)"
-                          strokeWidth={2}
-                          name="Completed Tokens"
-                        />
-                        <Line
-                          yAxisId="right"
-                          type="monotone"
-                          dataKey="avgReturn"
-                          stroke="var(--color-avgReturn)"
-                          strokeWidth={2}
-                          name="Avg Return (%)"
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
-                </CardContent>
-              </Card>            
-            </div>
-          </TabsContent>
+          
           <TabsContent value="history" className="space-y-6">
             <Card>
               <CardHeader>
