@@ -191,7 +191,8 @@ export default function MarketplacePage() {
                       <Button variant="outline" size="sm" className="flex-1">
                         <Eye className="h-4 w-4 mr-2" />
                         View Profile
-                      </Button>                      <Button size="sm" className="flex-1" asChild>
+                      </Button>                      
+                      <Button size="sm" className="flex-1" asChild>
                         <Link href={`/createNewToken?restaurant=${restaurant.name.replace(/\s+/g, "-").toLowerCase()}`}>
                           <Plus className="h-4 w-4 mr-2" />
                           Create Token
@@ -256,7 +257,8 @@ export default function MarketplacePage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <Card>                <CardHeader>
+              <Card>                
+                <CardHeader>
                   <CardTitle className="text-lg">High Demand Species</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -273,7 +275,8 @@ export default function MarketplacePage() {
                 </CardContent>
               </Card>
 
-              <Card>                <CardHeader>
+              <Card>                
+                <CardHeader>
                   <CardTitle className="text-lg">Average Funding Time</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -288,7 +291,8 @@ export default function MarketplacePage() {
                 </CardContent>
               </Card>
 
-              <Card>                <CardHeader>
+              <Card>                
+                <CardHeader>
                   <CardTitle className="text-lg">Quality Premiums</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -302,7 +306,8 @@ export default function MarketplacePage() {
                   </div>
                 </CardContent>
               </Card>
-            </div>            <Card>
+            </div>            
+            <Card>
               <CardHeader>
                 <CardTitle>Market Demand Analysis</CardTitle>
                 <CardDescription>Current restaurant and consumer demand by species</CardDescription>
@@ -422,7 +427,8 @@ export default function MarketplacePage() {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>          <TabsContent value="pricing" className="space-y-6">
+          </TabsContent>          
+          <TabsContent value="pricing" className="space-y-6">
             {/* Pricing Insights Summary */}
             <div className="grid md:grid-cols-4 gap-4 mb-6">
               <Card>

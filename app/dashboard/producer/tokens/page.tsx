@@ -255,14 +255,15 @@ export default function MyTokensPage() {
               </CardHeader>
               <CardContent>
                 {viewMode === "grid" ? (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">                    {filteredTokens.map((token) => (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{filteredTokens.map((token) => (
                       <Card key={token.id} className="hover:shadow-lg transition-shadow bg-gray-100">
                         <CardHeader className="pb-3">
                           <div className="flex items-center justify-between">
                             <Badge className={getStatusColor(token.status)}>
                               {getStatusIcon(token.status)}
                               <span className="ml-1">{token.status}</span>
-                            </Badge>                          </div>
+                            </Badge>                          
+                            </div>
                           <div className="flex items-center space-x-3">
                             <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100">
                               {token.image && (
@@ -319,7 +320,8 @@ export default function MyTokensPage() {
                           <div className="flex items-center justify-between text-sm">
                             <span className="text-gray-600">Risk Level</span>
                             <span className={`font-medium ${getRiskColor(token.riskLevel)}`}>{token.riskLevel}</span>
-                          </div>                          <div className="flex space-x-2">                            
+                          </div>                          
+                          <div className="flex space-x-2">                            
                             <Button variant="outline" size="sm" className="flex-1" asChild>
                               <Link href="/viewToken">View Details</Link>
                             </Button>
@@ -417,7 +419,9 @@ export default function MyTokensPage() {
                               <Clock className="h-4 w-4 mr-1" />
                               {token.daysRemaining} days remaining
                             </span>
-                          </div>                          <div className="flex space-x-2">                            <Button variant="outline" size="sm" asChild>
+                          </div>                          
+                          <div className="flex space-x-2">                            
+                            <Button variant="outline" size="sm" asChild>
                               <Link href="/viewToken">View Details</Link>
                             </Button>
                             {token.status === "Ready Soon" && <Button size="sm">Initiate Harvest</Button>}
@@ -714,7 +718,8 @@ export default function MyTokensPage() {
                           <p className="font-medium">{token.species}</p>
                           <p className="text-sm text-gray-600">Token {token.id} created</p>
                         </div>
-                      </div>                      <div className="text-right">
+                      </div>                      
+                      <div className="text-right">
                         <p className="text-sm font-medium">{token.createdDate}</p>
                         <p className="text-xs text-gray-600">₱{token.total.toLocaleString()} value</p>
                       </div>

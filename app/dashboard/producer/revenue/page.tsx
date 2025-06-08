@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -207,15 +206,13 @@ export default function RevenuePage() {
                 </span>
               </div>
             </CardContent>
-          </Card>
-
-          <Card>
+          </Card>          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Profit Margin</CardTitle>
-              <BarChart3 className="h-4 w-4 text-purple-600" />
+              <BarChart3 className="h-4 w-4 text-blue-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-purple-600">{profitMargin}%</div>
+              <div className="text-2xl font-bold text-blue-600">{profitMargin}%</div>
               <p className="text-xs text-gray-600">Industry avg: 35%</p>
             </CardContent>
           </Card>
@@ -353,18 +350,17 @@ export default function RevenuePage() {
                           <span className="text-xs text-blue-600">Target: 35%</span>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                    </div>                    
+                    <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
                       <div>
-                        <p className="text-sm font-medium text-purple-800">Revenue per Token</p>
-                        <p className="text-xs text-purple-600">Average revenue</p>
+                        <p className="text-sm font-medium text-blue-800">Revenue per Token</p>
+                        <p className="text-xs text-blue-600">Average revenue</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-purple-700">₱78k</p>
+                        <p className="text-lg font-bold text-blue-700">₱78k</p>
                         <div className="flex items-center">
-                          <Activity className="h-3 w-3 text-purple-600 mr-1" />
-                          <span className="text-xs text-purple-600">Per token</span>
+                          <Activity className="h-3 w-3 text-blue-600 mr-1" />
+                          <span className="text-xs text-blue-600">Per token</span>
                         </div>
                       </div>
                     </div>
@@ -385,17 +381,15 @@ export default function RevenuePage() {
                       <div className="text-sm text-gray-600">Active Tokens</div>
                       <div className="text-xs text-green-600">Generating revenue</div>
                     </div>
-                    
                     <div className="text-center p-4 border rounded-lg">
                       <div className="text-2xl font-bold text-blue-600">13</div>
                       <div className="text-sm text-gray-600">Completed Harvests</div>
                       <div className="text-xs text-blue-600">This year</div>
                     </div>
-                    
-                    <div className="text-center p-4 border rounded-lg">
-                      <div className="text-2xl font-bold text-purple-600">41</div>
+                      <div className="text-center p-4 border rounded-lg">
+                      <div className="text-2xl font-bold text-blue-600">41</div>
                       <div className="text-sm text-gray-600">Total Investors</div>
-                      <div className="text-xs text-purple-600">Across all tokens</div>
+                      <div className="text-xs text-blue-600">Across all tokens</div>
                     </div>
                   </div>
                 </CardContent>
@@ -495,7 +489,6 @@ export default function RevenuePage() {
                   <p className="text-xs text-gray-600">{completedPayments.length} completed payments</p>
                 </CardContent>
               </Card>
-              
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Pending Payments</CardTitle>
@@ -693,13 +686,11 @@ export default function RevenuePage() {
                         <p className="text-sm font-medium text-yellow-800">Seasonal Variation</p>
                         <p className="text-xs text-yellow-600">Consider monsoon season impact on harvests</p>
                       </div>
-                    </div>
-
-                    <div className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg">
-                      <TrendingUp className="h-5 w-5 text-purple-600 mt-0.5" />
+                    </div>                    <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                      <TrendingUp className="h-5 w-5 text-blue-600 mt-0.5" />
                       <div>
-                        <p className="text-sm font-medium text-purple-800">Investor Interest</p>
-                        <p className="text-xs text-purple-600">Growing investor base supporting expansion</p>
+                        <p className="text-sm font-medium text-blue-800">Investor Interest</p>
+                        <p className="text-xs text-blue-600">Growing investor base supporting expansion</p>
                       </div>
                     </div>
                   </div>
