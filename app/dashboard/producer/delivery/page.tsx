@@ -29,6 +29,7 @@ import {
   Eye,
   Timer,
   Route,
+  HandCoins
 } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard-header";
 import {
@@ -46,6 +47,7 @@ export default function DeliveryPage() {
   );
   const [activeTab, setActiveTab] = useState("active");
   const [isMounted, setIsMounted] = useState(false);
+  const [showCurrentStepDetails, setShowCurrentStepDetails] = useState(false);
   const stats = getDeliveryStats();
   // Simulate real-time updates
   useEffect(() => {
@@ -58,8 +60,17 @@ export default function DeliveryPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const getStepIcon = (stepId: number, status: string) => {
-    const iconProps = `h-4 w-4 ${status === "completed" ? "text-green-600" : status === "active" ? "text-blue-600" : "text-gray-300"}`;
+  const getStepIcon = (stepId: number, status: string, options?: { overrideColor?: string }) => {
+    const color =
+      options?.overrideColor ??
+      (status === "completed" ? "text-green-500" 
+        : status === "active" ? "text-blue-500"
+        : "text-gray-400");
+    const iconProps = `h-4 w-4 ${color}`;
+
+    if (status === "completed") {
+      return <CheckCircle className={iconProps} strokeWidth={2} />;
+    }
 
     switch (stepId) {
       case 1:
@@ -67,13 +78,14 @@ export default function DeliveryPage() {
       case 2:
         return <Truck className={iconProps} strokeWidth={2} />;
       case 3:
-        return <CheckCircle className={iconProps} strokeWidth={2} />;
+        return <MapPin className={iconProps} strokeWidth={2} />;
       case 4:
-        return <CheckCircle className={iconProps} strokeWidth={2} />;
+        return <HandCoins className={iconProps} strokeWidth={2} />;
       default:
         return <Package className={iconProps} strokeWidth={2} />;
     }
   };
+
   const getStepDetails = (stepId: number) => {
     const details = {
       1: {
@@ -374,12 +386,12 @@ export default function DeliveryPage() {
                 {selectedDelivery.unit}
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-6 pb-8">
+            <CardContent className={`px-6 ${showCurrentStepDetails ? "pb-8" : "pb-0"}`}>
               {/* Desktop Progress Steps */}
-              <div className="hidden md:block mb-10">
+              <div className="hidden md:block">
                 <div className="relative px-4 py-6">
                   {/* Step Container */}
-                  <div className="flex items-center justify-between relative">
+                  <div className="flex justify-between relative">
                     {/* Background Line */}
                     <div className="absolute top-6 left-6 right-6 h-0.5 bg-gray-200" />
 
@@ -407,25 +419,17 @@ export default function DeliveryPage() {
                           {/* Step Circle */}
                           <div
                             className={`
-                            w-12 h-12 rounded-full flex items-center justify-center mb-3 border-2 bg-white
-                            ${
-                              step.status === "completed"
-                                ? "border-green-500 bg-green-500 text-white"
-                                : step.status === "active"
-                                  ? "border-blue-500 bg-blue-500 text-white"
-                                  : "border-gray-300 text-gray-400"
-                            }
+                              w-12 h-12 rounded-full flex items-center justify-center mb-3 border-2
+                              ${
+                                step.status === "completed"
+                                  ? "border-green-500 bg-white"
+                                  : step.status === "active"
+                                    ? "border-blue-500 bg-white"
+                                    : "border-gray-300 bg-white text-gray-400"
+                              }
                           `}
                           >
-                            {" "}
-                            {step.status === "completed" ? (
-                              <CheckCircle
-                                className="h-4 w-4"
-                                strokeWidth={2}
-                              />
-                            ) : (
-                              getStepIcon(step.id, step.status)
-                            )}
+                            {getStepIcon(step.id, step.status)}
                           </div>
                           {/* Step Info */}
                           <div className="text-center max-w-24">
@@ -490,10 +494,23 @@ export default function DeliveryPage() {
                       % Complete
                     </span>
                   </div>
+
+                  <div className="text-center mt-4">
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowCurrentStepDetails((prev) => !prev)}
+                    >
+                      {showCurrentStepDetails
+                        ? "Hide Current Step Details"
+                        : "View Current Step Details"}
+                    </Button>
+                  </div>
+                  
                 </div>
+
               </div>
               {/* Mobile Progress Steps */}
-              <div className="md:hidden space-y-5 mb-8">
+              <div className="md:hidden space-y-5">
                 {selectedDelivery.steps.map((step) => {
                   const stepDetails = getStepDetails(step.id);
                   const isAccessible = isStepAccessible(
@@ -553,164 +570,168 @@ export default function DeliveryPage() {
                 })}
               </div>
 
-              {/* Current Step Details */}
-              <div className="grid gap-6 md:grid-cols-2 mt-8 pt-8 border-t border-gray-200">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-lg text-gray-900">
-                    Delivery Details
-                  </h4>
-                  <div className="space-y-3 text-sm bg-gray-50 p-4 rounded-lg">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Courier:</span>
-                      <span className="font-medium text-gray-900">
-                        {selectedDelivery.courierName}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Contact:</span>
-                      <span className="font-medium text-gray-900">
-                        {selectedDelivery.courierContact}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Destination:</span>
-                      <span className="font-medium text-gray-900">
-                        {selectedDelivery.destination}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-lg text-gray-900">
-                    Timeline
-                  </h4>
-                  <div className="space-y-3 text-sm bg-gray-50 p-4 rounded-lg">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Harvested:</span>
-                      <span className="font-medium text-gray-900">
-                        {safeFormatDate(selectedDelivery.harvestDate)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Packaged:</span>
-                      <span className="font-medium text-gray-900">
-                        {safeFormatDate(selectedDelivery.packagedDate)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">ETA:</span>
-                      <span className="font-medium text-gray-900">
-                        {safeFormatDate(selectedDelivery.estimatedDelivery)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Current Step Detailed Information */}
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                {(() => {
-                  const currentStepDetails = getStepDetails(
-                    selectedDelivery.currentStep,
-                  );
-                  const currentStep = selectedDelivery.steps.find(
-                    (s) => s.status === "active",
-                  );
-
-                  return (
-                    <div
-                      className={`p-6 rounded-xl ${currentStepDetails.bgColor} ${currentStepDetails.borderColor} border-2 shadow-sm`}
-                    >
-                      <div className="flex items-center gap-4 mb-4">
-                        <div
-                          className={`w-12 h-12 rounded-full flex items-center justify-center bg-${currentStepDetails.color}-500 text-white shadow-lg`}
-                        >
-                          {getStepIcon(selectedDelivery.currentStep, "active")}
+              {showCurrentStepDetails && (
+                <div className="pt-8 border-t border-gray-200">
+                  {/* Current Step Details */}
+                  <div className="grid gap-6 md:grid-cols-2 mb-8">
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-lg text-gray-900">
+                        Delivery Details
+                      </h4>
+                      <div className="space-y-3 text-sm bg-gray-50 p-4 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">Courier:</span>
+                          <span className="font-medium text-gray-900">
+                            {selectedDelivery.courierName}
+                          </span>
                         </div>
-                        <div>
-                          <h4 className="font-bold text-xl text-gray-900">
-                            {currentStepDetails.title}
-                          </h4>
-                          <p className="text-base text-gray-600 mt-1">
-                            {currentStepDetails.description}
-                          </p>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">Contact:</span>
+                          <span className="font-medium text-gray-900">
+                            {selectedDelivery.courierContact}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">Destination:</span>
+                          <span className="font-medium text-gray-900">
+                            {selectedDelivery.destination}
+                          </span>
                         </div>
                       </div>
-
-                      {/* Step-specific content */}
-                      {selectedDelivery.currentStep === 1 && (
-                        <div className="grid gap-4 md:grid-cols-2 mt-4">
-                          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
-                            <Timer className="h-5 w-5 text-blue-600" />
-                            <span className="text-sm font-medium">
-                              Harvest started:{" "}
-                              {safeFormatDeliveryTime(selectedDelivery.harvestDate)}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
-                            <Fish className="h-5 w-5 text-blue-600" />
-                            <span className="text-sm font-medium">
-                              {selectedDelivery.quantity}{" "}
-                              {selectedDelivery.unit}{" "}
-                              {selectedDelivery.fishType}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-
-                      {selectedDelivery.currentStep === 2 && (
-                        <div className="grid gap-4 md:grid-cols-2 mt-4">
-                          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
-                            <Route className="h-5 w-5 text-orange-600" />
-                            <span className="text-sm font-medium">
-                              En route to {selectedDelivery.destination}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
-                            <Truck className="h-5 w-5 text-orange-600" />
-                            <span className="text-sm font-medium">
-                              Courier: {selectedDelivery.courierName}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-
-                      {selectedDelivery.currentStep === 3 && (
-                        <div className="grid gap-4 md:grid-cols-2 mt-4">
-                          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
-                            <MapPin className="h-5 w-5 text-purple-600" />
-                            <span className="text-sm font-medium">
-                              Arrived at {selectedDelivery.destination}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
-                            <Eye className="h-5 w-5 text-purple-600" />
-                            <span className="text-sm font-medium">
-                              Awaiting quality verification
-                            </span>
-                          </div>
-                        </div>
-                      )}
-
-                      {selectedDelivery.currentStep === 4 && (
-                        <div className="grid gap-4 md:grid-cols-2 mt-4">
-                          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
-                            <CheckCircle className="h-5 w-5 text-green-600" />
-                            <span className="text-sm font-medium">
-                              Delivery completed successfully
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
-                            <Badge className="bg-green-100 text-green-800 border-green-200">
-                              Quality Score: {selectedDelivery.quality.score}%
-                            </Badge>
-                          </div>
-                        </div>
-                      )}
                     </div>
-                  );
-                })()}
-              </div>
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-lg text-gray-900">
+                        Timeline
+                      </h4>
+                      <div className="space-y-3 text-sm bg-gray-50 p-4 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">Harvested:</span>
+                          <span className="font-medium text-gray-900">
+                            {safeFormatDate(selectedDelivery.harvestDate)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">Packaged:</span>
+                          <span className="font-medium text-gray-900">
+                            {safeFormatDate(selectedDelivery.packagedDate)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">ETA:</span>
+                          <span className="font-medium text-gray-900">
+                            {safeFormatDate(selectedDelivery.estimatedDelivery)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Current Step Detailed Information */}
+                  <div className="mt-8 pt-8 border-t border-gray-200">
+                    {(() => {
+                      const currentStepDetails = getStepDetails(
+                        selectedDelivery.currentStep,
+                      );
+                      const currentStep = selectedDelivery.steps.find(
+                        (s) => s.status === "active",
+                      );
+
+                      return (
+                        <div
+                          className={`p-6 rounded-xl ${currentStepDetails.bgColor} ${currentStepDetails.borderColor} border-2 shadow-sm`}
+                        >
+                          <div className="flex items-center gap-4 mb-4">
+                            <div
+                              className={`w-12 h-12 rounded-full flex items-center justify-center bg-${currentStepDetails.color}-500 text-white shadow-lg`}
+                            >
+                              {getStepIcon(selectedDelivery.currentStep, "active", { overrideColor: "text-white" })} 
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-xl text-gray-900">
+                                {currentStepDetails.title}
+                              </h4>
+                              <p className="text-base text-gray-600 mt-1">
+                                {currentStepDetails.description}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Step-specific content */}
+                          {selectedDelivery.currentStep === 1 && (
+                            <div className="grid gap-4 md:grid-cols-2 mt-4">
+                              <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
+                                <Timer className="h-5 w-5 text-blue-600" />
+                                <span className="text-sm font-medium">
+                                  Harvest started:{" "}
+                                  {safeFormatDeliveryTime(selectedDelivery.harvestDate)}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
+                                <Fish className="h-5 w-5 text-blue-600" />
+                                <span className="text-sm font-medium">
+                                  {selectedDelivery.quantity}{" "}
+                                  {selectedDelivery.unit}{" "}
+                                  {selectedDelivery.fishType}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+
+                          {selectedDelivery.currentStep === 2 && (
+                            <div className="grid gap-4 md:grid-cols-2 mt-4">
+                              <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
+                                <Route className="h-5 w-5 text-orange-600" />
+                                <span className="text-sm font-medium">
+                                  En route to {selectedDelivery.destination}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
+                                <Truck className="h-5 w-5 text-orange-600" />
+                                <span className="text-sm font-medium">
+                                  Courier: {selectedDelivery.courierName}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+
+                          {selectedDelivery.currentStep === 3 && (
+                            <div className="grid gap-4 md:grid-cols-2 mt-4">
+                              <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
+                                <MapPin className="h-5 w-5 text-purple-600" />
+                                <span className="text-sm font-medium">
+                                  Arrived at {selectedDelivery.destination}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
+                                <Eye className="h-5 w-5 text-purple-600" />
+                                <span className="text-sm font-medium">
+                                  Awaiting quality verification
+                                </span>
+                              </div>
+                            </div>
+                          )}
+
+                          {selectedDelivery.currentStep === 4 && (
+                            <div className="grid gap-4 md:grid-cols-2 mt-4">
+                              <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
+                                <CheckCircle className="h-5 w-5 text-green-600" />
+                                <span className="text-sm font-medium">
+                                  Delivery completed successfully
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg">
+                                <Badge className="bg-green-100 text-green-800 border-green-200">
+                                  Quality Score: {selectedDelivery.quality.score}%
+                                </Badge>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 
