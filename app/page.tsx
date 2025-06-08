@@ -80,9 +80,7 @@ export default function HomePage() {
             </Card>
           </div>
         </div>
-      </section>
-
-      {/* Features */}
+      </section>      {/* Features */}
       <section id="platform-features" className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Platform Features</h2>
@@ -98,6 +96,11 @@ export default function HomePage() {
               <Leaf className="h-12 w-12 text-green-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Sustainability Tracking</h3>
               <p className="text-gray-600">Real-time IoT monitoring and Government issued certifications</p>
+            </div>
+            <div className="text-center">
+              <BarChart3 className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Revenue Analytics</h3>
+              <p className="text-gray-600">Comprehensive financial dashboards and performance tracking for producers</p>
             </div>
           </div>
         </div>
