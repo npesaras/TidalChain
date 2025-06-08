@@ -5,8 +5,8 @@ import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Waves, Fish, TrendingUp, ShoppingCart, Shield, ArrowRight } from "lucide-react"
+import { Tabs, TabsContent} from "@/components/ui/tabs"
+import { Waves, Shield, ArrowRight } from "lucide-react"
 
 export default function AuthPage() {
   const searchParams = useSearchParams()

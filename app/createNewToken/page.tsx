@@ -8,10 +8,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Checkbox } from "@/components/ui/checkbox"
-import { ArrowLeft, Fish, DollarSign, Leaf, Camera, Upload, CheckCircle } from "lucide-react"
+import { ArrowLeft, Leaf, Upload, CheckCircle } from "lucide-react"
 import { DashboardHeader } from "@/components/dashboard-header"
 
 export default function TokenizePage() {
@@ -138,7 +137,8 @@ export default function TokenizePage() {
                         value={formData.pricePerKg}
                         onChange={(e) => setFormData({ ...formData, pricePerKg: e.target.value })}
                       />
-                    </div>                    <div className="space-y-2">
+                    </div>                    
+                    <div className="space-y-2">
                       <Label>Total Value</Label>
                       <div className="text-2xl font-bold text-green-600">
                         ₱
@@ -298,7 +298,8 @@ export default function TokenizePage() {
                       <CardHeader>
                         <CardTitle>Investment Settings</CardTitle>
                       </CardHeader>
-                      <CardContent className="space-y-4">                        <div className="space-y-2">
+                      <CardContent className="space-y-4">                        
+                        <div className="space-y-2">
                           <Label>Minimum Investment (₱)</Label>
                           <Input type="number" placeholder="500" />
                         </div>

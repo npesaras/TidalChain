@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Fish, Waves, TrendingUp, Shield, Users, Leaf, BarChart3 } from "lucide-react"
+import { Waves, Shield, Leaf, BarChart3, Calendar, Truck, Coins } from "lucide-react"
 
 export default function HomePage() {
   return (
@@ -41,46 +40,45 @@ export default function HomePage() {
             Transparent, traceable, and profitable aquaculture for everyone.
           </p>
         </div>
-      </section>
+      </section>     
 
       {/* How It Works */}
       <section id="how-it-works" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">How TidalChain Works</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <Fish className="h-12 w-12 text-blue-600 mb-4" />
-                <CardTitle>Producers Tokenize</CardTitle>
-                <CardDescription>
-                  Sustainable fish producers create tokens representing their future harvests, backed by IoT monitoring
-                  and sustainability certifications.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader>
-                <TrendingUp className="h-12 w-12 text-green-600 mb-4" />
-                <CardTitle>Investors Fund</CardTitle>
-                <CardDescription>
-                  Global investors purchase tokens to fund sustainable aquaculture operations and earn returns from
-                  successful harvests.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader>
-                <Users className="h-12 w-12 text-purple-600 mb-4" />
-                <CardTitle>Buyers Purchase</CardTitle>
-                <CardDescription>
-                  Restaurants and retailers buy tokens to secure premium, traceable fish with verified sustainability
-                  credentials.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-blue-800 rounded-2xl p-8 text-white text-center">
+              <div className="bg-white/20 rounded-xl p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                <BarChart3 className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Monitor Fish Market Demand and Trends</h3>
+            </div>
+            
+            <div className="bg-blue-800 rounded-2xl p-8 text-white text-center">
+              <div className="bg-white/20 rounded-xl p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                <Calendar className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Optimize Scheduling and sure-demand Farming</h3>
+            </div>
+            
+            <div className="bg-blue-800 rounded-2xl p-8 text-white text-center">
+              <div className="bg-white/20 rounded-xl p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                <Truck className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Track Fish Delivery Quality</h3>
+            </div>
+            
+            <div className="bg-blue-800 rounded-2xl p-8 text-white text-center">
+              <div className="bg-white/20 rounded-xl p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                <Coins className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Tokenization of Assets for Funding and Selling</h3>
+            </div>
           </div>
         </div>
-      </section>      {/* Features */}
+      </section>
+
+      {/* Features */}
       <section id="platform-features" className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Platform Features</h2>
@@ -96,9 +94,8 @@ export default function HomePage() {
               <Leaf className="h-12 w-12 text-green-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Sustainability Tracking</h3>
               <p className="text-gray-600">Real-time IoT monitoring and Government issued certifications</p>
-            </div>
-            <div className="text-center">
-              <BarChart3 className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+            </div>            <div className="text-center">
+              <BarChart3 className="h-12 w-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Revenue Analytics</h3>
               <p className="text-gray-600">Comprehensive financial dashboards and performance tracking for producers</p>
             </div>
