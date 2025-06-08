@@ -587,8 +587,7 @@ export default function RevenuePage() {
               <CardHeader>
                 <CardTitle>Revenue Forecasting</CardTitle>
                 <CardDescription>Projected revenue based on current tokens and market trends</CardDescription>
-              </CardHeader>
-              <CardContent>
+              </CardHeader>              <CardContent className="p-6">
                 <ChartContainer
                   config={{
                     actual: {
@@ -608,10 +607,15 @@ export default function RevenuePage() {
                       color: "hsl(var(--chart-4))",
                     },
                   }}
-                  className="h-80"
+                  className="h-80 w-full"
                 >
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={[...monthlyRevenueData, ...projectedRevenue]}>
+                    <LineChart 
+                      data={[...monthlyRevenueData, ...projectedRevenue]}
+                      width={undefined}
+                      height={undefined}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                    >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" />
                       <YAxis />
